@@ -1,2 +1,2 @@
 # Log
-Logging App.
+This is my personal Logging App.
