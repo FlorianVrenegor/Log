@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Reading Tracker</string>
+    <string name="add_btn">Add</string>
+    <string name="title">Title</string>
+    <string name="pagenumber">Pagenumber</string>
+    <string name="save">Save</string>
+    <string name="load">Load</string>
 </resources>
