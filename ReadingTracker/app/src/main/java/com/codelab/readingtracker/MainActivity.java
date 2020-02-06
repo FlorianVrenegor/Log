@@ -30,12 +30,18 @@ public class MainActivity extends AppCompatActivity {
 
     List<Entry> entries = new ArrayList<>();
 
+    TextView entriesTextView = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        entriesTextView = findViewById(R.id.entries_textView);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        load();
 
         final TextView textView = findViewById(R.id.textView);
 
@@ -69,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView loadTextView = findViewById(R.id.loaded_textView);
+        final TextView loadTextView = findViewById(R.id.loaded_textView);
 
         Button loadButton = findViewById(R.id.load_btn);
         loadButton.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +85,24 @@ public class MainActivity extends AppCompatActivity {
                 loadTextView.setText("Loaded " + Arrays.toString(entries.toArray()) +"!");
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        load();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        save();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        save();
     }
 
     SharedPreferences sharedPreferences = null;
@@ -98,5 +122,9 @@ public class MainActivity extends AppCompatActivity {
         Map<String, ?> temp = sharedPreferences.getAll();
         List<String> strings = new ArrayList<>(stringSet);
         strings.forEach((s) -> entries.add(Entry.fromString(s)));
+
+        if(entriesTextView != null) {
+            entriesTextView.setText(entries.toString());
+        }
     }
 }
