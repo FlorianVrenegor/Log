@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,14 +35,9 @@ public class ReadingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reading, container, false);
 
-
-        entriesTextView = view.findViewById(R.id.entries_textView);
-
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         load();
-
-        final TextView textView = view.findViewById(R.id.textView);
 
         final EditText titleEditText = view.findViewById(R.id.title_editText);
         final EditText pageNumberEditText = view.findViewById(R.id.pagenumber_editText);
@@ -56,23 +52,6 @@ public class ReadingFragment extends Fragment {
             }
             Entry entry = new Entry(title, pageNumber);
             entries.add(entry);
-            textView.setText("Added " + entry.toString() + "!");
-        });
-
-        TextView saveTextView = view.findViewById(R.id.saved_textView);
-
-        Button saveButton = view.findViewById(R.id.save_btn);
-        saveButton.setOnClickListener(v -> {
-            save();
-            saveTextView.setText("Saved " + entries.toString() + "!");
-        });
-
-        final TextView loadTextView = view.findViewById(R.id.loaded_textView);
-
-        Button loadButton = view.findViewById(R.id.load_btn);
-        loadButton.setOnClickListener(v -> {
-            load();
-            loadTextView.setText("Loaded " + Arrays.toString(entries.toArray()) +"!");
         });
 
         return view;
@@ -103,17 +82,20 @@ public class ReadingFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("Entries");
         editor.putStringSet("Entries", set).apply();
+
+        Toast.makeText(getContext(), "Saved " + Arrays.toString(entries.toArray()), Toast.LENGTH_SHORT).show();
     }
 
     private void load() {
         entries.clear();
         Set<String> stringSet = sharedPreferences.getStringSet("Entries", new HashSet<>());
-        Map<String, ?> temp = sharedPreferences.getAll();
         List<String> strings = new ArrayList<>(stringSet);
         strings.forEach((s) -> entries.add(Entry.fromString(s)));
 
         if(entriesTextView != null) {
             entriesTextView.setText(entries.toString());
         }
+
+        Toast.makeText(getContext(), "Loaded " + Arrays.toString(entries.toArray()), Toast.LENGTH_SHORT).show();
     }
 }
