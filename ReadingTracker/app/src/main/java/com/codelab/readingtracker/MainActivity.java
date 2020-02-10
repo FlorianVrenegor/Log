@@ -2,6 +2,7 @@ package com.codelab.readingtracker;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
@@ -58,23 +59,38 @@ public class MainActivity extends AppCompatActivity {
         TextView saveTextView = findViewById(R.id.saved_textView);
 
         Button saveButton = findViewById(R.id.save_btn);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save();
-                saveTextView.setText("Saved " + entries.toString() + "!");
-            }
+        saveButton.setOnClickListener(v -> {
+            save();
+            saveTextView.setText("Saved " + entries.toString() + "!");
         });
 
         final TextView loadTextView = findViewById(R.id.loaded_textView);
 
         Button loadButton = findViewById(R.id.load_btn);
-        loadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                load();
-                loadTextView.setText("Loaded " + Arrays.toString(entries.toArray()) +"!");
-            }
+        loadButton.setOnClickListener(v -> {
+            load();
+            loadTextView.setText("Loaded " + Arrays.toString(entries.toArray()) +"!");
+        });
+
+        TextView timerTextView = findViewById(R.id.timer_textView);
+        Button startButton = findViewById(R.id.start_btn);
+        startButton.setOnClickListener(v -> {
+            CountDownTimer timer = new CountDownTimer(30000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    timerTextView.setText("Remaining: " + millisUntilFinished / 1000 + " sec");
+                }
+
+                @Override
+                public void onFinish() {
+                    timerTextView.setText("You Win!");
+                }
+            }.start();
+        });
+
+        Button stopButton = findViewById(R.id.stop_btn);
+        stopButton.setOnClickListener(v -> {
+
         });
     }
 
