@@ -19,23 +19,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class ReadingFragment extends Fragment {
 
-    List<Entry> entries = new ArrayList<>();
-
-    TextView entriesTextView = null;
-
-    SharedPreferences sharedPreferences = null;
+    private List<Entry> entries = new ArrayList<>();
+    private TextView entriesTextView = null;
+    private SharedPreferences sharedPreferences = null;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reading, container, false);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(getContext()));
 
         load();
 
