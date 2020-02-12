@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class TimerFragment extends Fragment {
 
     private TextView timerTextView;
@@ -28,24 +30,33 @@ public class TimerFragment extends Fragment {
         startButton = view.findViewById(R.id.start_btn);
         stopButton = view.findViewById(R.id.stop_btn);
 
-        startButton.setOnClickListener(v -> {
-            CountDownTimer timer = new CountDownTimer(30000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    timerTextView.setText("Remaining: " + millisUntilFinished / 1000 + " sec");
-                }
+        AtomicReference<CountDownTimer> timer = new AtomicReference<>();
 
-                @Override
-                public void onFinish() {
-                    timerTextView.setText("You Win!");
-                }
-            }.start();
+        startButton.setOnClickListener(v -> {
+            if(!running) {
+                timer.set(new CountDownTimer(30000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        timerTextView.setText("Remaining: " + millisUntilFinished / 1000 + " sec");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        timerTextView.setText("You Win!");
+                    }
+                }.start());
+            }
+            running = true;
         });
 
         stopButton.setOnClickListener(v -> {
-
+            timer.get().cancel();
+            running = false;
+            timerTextView.setText("Canceled!");
         });
 
         return view;
     }
+
+    private boolean running = false;
 }

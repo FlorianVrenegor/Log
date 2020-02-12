@@ -2,7 +2,7 @@ package com.codelab.readingtracker;
 
 import androidx.annotation.NonNull;
 
-class Entry {
+public class Entry {
     public String title;
     public int pageNumber;
 
