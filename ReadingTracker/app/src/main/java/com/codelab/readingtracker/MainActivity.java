@@ -6,6 +6,9 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.codelab.readingtracker.reading.ReadingFragment;
+import com.codelab.readingtracker.todo.TodoFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     FragmentAdapter adapter;
@@ -22,19 +25,18 @@ public class MainActivity extends AppCompatActivity {
         setupViewPager(viewPager);
 
         Button readingButton = findViewById(R.id.reading_button);
-        readingButton.setOnClickListener(v -> {
-            setTab(0);
-        });
+        readingButton.setOnClickListener(v -> setTab(0));
         Button timerButton = findViewById(R.id.timer_button);
-        timerButton.setOnClickListener(v -> {
-            setTab(1);
-        });
+        timerButton.setOnClickListener(v -> setTab(1));
+        Button todoButton = findViewById(R.id.todo_button);
+        todoButton.setOnClickListener(v -> setTab(2));
     }
 
     private void setupViewPager(ViewPager viewPager) {
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), 1);
         adapter.addFragment(new ReadingFragment());
         adapter.addFragment(new TimerFragment());
+        adapter.addFragment(new TodoFragment());
         viewPager.setAdapter(adapter);
     }
 

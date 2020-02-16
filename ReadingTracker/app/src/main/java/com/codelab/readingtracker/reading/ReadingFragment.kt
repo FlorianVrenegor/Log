@@ -1,4 +1,4 @@
-package com.codelab.readingtracker
+package com.codelab.readingtracker.reading
 
 import android.os.Bundle
 import android.util.Log
@@ -7,15 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.codelab.readingtracker.R
 
-import com.codelab.readingtracker.room.RoomEntryProvider
-
-import java.lang.reflect.Array
 import java.util.ArrayList
-import java.util.Arrays
-import java.util.Objects
 
 class ReadingFragment : Fragment() {
 
@@ -37,7 +32,7 @@ class ReadingFragment : Fragment() {
         val pageNumberEditText = view.findViewById<EditText>(R.id.pagenumber_editText)
 
         val button = view.findViewById<Button>(R.id.button)
-        button.setOnClickListener { v ->
+        button.setOnClickListener {
             val title = titleEditText.text.toString()
             val pageNumberString = pageNumberEditText.text.toString()
             var pageNumber = 0

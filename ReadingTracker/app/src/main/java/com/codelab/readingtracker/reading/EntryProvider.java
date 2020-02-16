@@ -1,4 +1,4 @@
-package com.codelab.readingtracker;
+package com.codelab.readingtracker.reading;
 
 import java.util.List;
 

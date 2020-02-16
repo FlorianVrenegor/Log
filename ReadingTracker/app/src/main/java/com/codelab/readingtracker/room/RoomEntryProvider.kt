@@ -2,8 +2,8 @@ package com.codelab.readingtracker.room
 
 import android.content.Context
 import androidx.room.Room
-import com.codelab.readingtracker.Entry
-import com.codelab.readingtracker.EntryProvider
+import com.codelab.readingtracker.reading.Entry
+import com.codelab.readingtracker.reading.EntryProvider
 
 class RoomEntryProvider(context: Context) : EntryProvider {
 
@@ -22,6 +22,8 @@ class RoomEntryProvider(context: Context) : EntryProvider {
 
     override fun load(): List<Entry>? {
         val entities: List<EntryEntity>? = entryDao.getAll().value ?: return null
-        return entities!!.map { entryEntity -> Entry(entryEntity.title, entryEntity.page ?: 0) }
+        return entities!!.map { entryEntity ->
+            Entry(entryEntity.title, entryEntity.page ?: 0)
+        }
     }
 }
