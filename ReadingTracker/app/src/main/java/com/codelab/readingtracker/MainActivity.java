@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.codelab.readingtracker.reading.ReadingFragment;
+import com.codelab.readingtracker.timer.TimerFragment;
 import com.codelab.readingtracker.todo.TodoFragment;
 
 public class MainActivity extends AppCompatActivity {

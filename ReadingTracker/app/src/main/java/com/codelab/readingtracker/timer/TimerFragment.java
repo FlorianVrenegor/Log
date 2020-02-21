@@ -1,4 +1,4 @@
-package com.codelab.readingtracker;
+package com.codelab.readingtracker.timer;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.codelab.readingtracker.R;
 
 import java.util.concurrent.atomic.AtomicReference;
 
