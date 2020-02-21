@@ -14,7 +14,7 @@ import java.util.ArrayList
 
 class ReadingFragment : Fragment() {
 
-    private var entries: MutableList<Entry>? = null
+    private var entries: ArrayList<Entry>? = null
     private var entryProvider: EntryProvider? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -62,12 +62,12 @@ class ReadingFragment : Fragment() {
     }
 
     private fun save() {
-        entryProvider!!.save(entries)
+        entries?.let { entryProvider!!.save(it) }
         Log.d("ReadingFragment Save - ", "Saved " + entries!!.toTypedArray().contentToString())
     }
 
     private fun load() {
-        entries = entryProvider!!.load() ?: ArrayList()
+        entries = entryProvider!!.load() as ArrayList<Entry>
         Log.d("ReadingFragment Load - ", "Loaded " + entries!!.toTypedArray().contentToString())
     }
 }
