@@ -31,10 +31,7 @@ class ReadingFragment : Fragment() {
 
         val button = view.findViewById<Button>(R.id.button)
         button.setOnClickListener {
-            val title = getTitle()
-            val pageNumber = getPageNumber()
-            val entry = Entry(title, pageNumber)
-            entries!!.add(entry)
+            entries!!.add(Entry(getTitle(), getPageNumber()))
         }
 
         return view
@@ -46,6 +43,7 @@ class ReadingFragment : Fragment() {
 
     private fun getPageNumber() : Int {
         val pageNumberString = pagenumber_editText.text.toString()
+
         if (pageNumberString.isNotEmpty()) {
             return Integer.parseInt(pageNumberString)
         }
