@@ -25,10 +25,6 @@ class ReadingFragment : Fragment() {
 
         load()
 
-        if (entries == null) {
-            entries = ArrayList()
-        }
-
         val button = view.findViewById<Button>(R.id.button)
         button.setOnClickListener {
             entries!!.add(Entry(getTitle(), getPageNumber()))
