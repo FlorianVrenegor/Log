@@ -15,19 +15,19 @@ import java.util.*
 
 class ReadingFragment : Fragment() {
 
-    private var entries: MutableList<Entry>? = null
-    private var entryProvider: EntryProvider? = null
+    private lateinit var entries: MutableList<Entry>
+    private lateinit var entryProvider: EntryProvider
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_reading, container, false)
 
-        entryProvider = context?.let { SharedPreferencesEntryProvider(it) }
+        entryProvider = SharedPreferencesEntryProvider(context)
 
         load()
 
         val button = view.findViewById<Button>(R.id.button)
         button.setOnClickListener {
-            entries!!.add(Entry(getTitle(), getPageNumber()))
+            entries.add(Entry(getTitle(), getPageNumber()))
         }
 
         return view
@@ -62,13 +62,13 @@ class ReadingFragment : Fragment() {
     }
 
     private fun save() {
-        entryProvider!!.save(entries)
-        Log.d("ReadingFragment Save - ", "Saved " + entries!!.toTypedArray().contentToString())
+        entryProvider.save(entries)
+        Log.d("ReadingFragment Save - ", "Saved " + entries.toTypedArray().contentToString())
     }
 
     private fun load() {
-        entries = entryProvider!!.load() ?: ArrayList()
-        Log.d("ReadingFragment Load - ", "Loaded " + entries!!.toTypedArray().contentToString())
+        entries = entryProvider.load() ?: ArrayList()
+        Log.d("ReadingFragment Load - ", "Loaded " + entries.toTypedArray().contentToString())
     }
 }
 
