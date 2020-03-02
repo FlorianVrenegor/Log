@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.codelab.readingtracker.R
 import com.codelab.readingtracker.storage.EntryProvider
@@ -25,7 +24,6 @@ class ReadingFragment : Fragment() {
 
         load()
 
-        val button = view.findViewById<Button>(R.id.button)
         button.setOnClickListener {
             entries.add(Entry(getTitle(), getPageNumber()))
         }
