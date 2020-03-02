@@ -14,13 +14,13 @@ import java.util.*
 
 class ReadingFragment : Fragment() {
 
-    private var entries: MutableList<Entry> = ArrayList()
+    private var entries: ArrayList<Entry> = ArrayList()
     private lateinit var entryProvider: EntryProvider
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_reading, container, false)
 
-        entryProvider = SharedPreferencesEntryProvider(context)
+        entryProvider = SharedPreferencesEntryProvider(requireContext())
 
         return view
     }
