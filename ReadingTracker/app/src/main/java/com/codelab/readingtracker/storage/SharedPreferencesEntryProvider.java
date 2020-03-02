@@ -19,7 +19,6 @@ public class SharedPreferencesEntryProvider implements EntryProvider {
 
     public SharedPreferencesEntryProvider(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(Objects.requireNonNull(context));
-
     }
 
     @Override
@@ -37,7 +36,7 @@ public class SharedPreferencesEntryProvider implements EntryProvider {
     public List<Entry> load() {
         List<Entry> entries = new ArrayList<>();
 
-        new ArrayList<>(sharedPreferences.getStringSet("Entries", new HashSet<>())).forEach((s) -> entries.add(Entry.fromString(s)));
+        sharedPreferences.getStringSet("Entries", new HashSet<>()).forEach((s) -> entries.add(Entry.fromString(s)));
 
         return entries;
     }
