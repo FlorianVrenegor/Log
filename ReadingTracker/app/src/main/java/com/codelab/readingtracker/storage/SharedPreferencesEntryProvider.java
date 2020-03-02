@@ -1,9 +1,11 @@
-package com.codelab.readingtracker.reading;
+package com.codelab.readingtracker.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.preference.PreferenceManager;
+
+import com.codelab.readingtracker.reading.Entry;
 
 import java.util.ArrayList;
 import java.util.HashSet;
