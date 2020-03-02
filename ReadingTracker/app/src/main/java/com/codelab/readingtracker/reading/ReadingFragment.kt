@@ -14,7 +14,7 @@ import java.util.*
 
 class ReadingFragment : Fragment() {
 
-    private lateinit var entries: MutableList<Entry>
+    private var entries: MutableList<Entry> = ArrayList()
     private lateinit var entryProvider: EntryProvider
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -22,13 +22,18 @@ class ReadingFragment : Fragment() {
 
         entryProvider = SharedPreferencesEntryProvider(context)
 
-        load()
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         button.setOnClickListener {
             entries.add(Entry(getTitle(), getPageNumber()))
         }
 
-        return view
+        load()
+
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun getTitle() : String {
@@ -65,7 +70,7 @@ class ReadingFragment : Fragment() {
     }
 
     private fun load() {
-        entries = entryProvider.load() ?: ArrayList()
+        entries = entryProvider.load()
         Log.d("ReadingFragment Load - ", "Loaded " + entries.toTypedArray().contentToString())
     }
 }
