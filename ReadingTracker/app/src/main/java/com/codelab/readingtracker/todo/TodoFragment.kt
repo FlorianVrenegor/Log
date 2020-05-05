@@ -22,24 +22,17 @@ class TodoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         add_button.setOnClickListener {
-            val todoItem = context?.let { it1 -> TodoItemView(it1) }
-            if (todoItem != null) {
-                val tv = TextView(context)
-                tv.text = if (todo_editText.text.isNotEmpty()) {
-                    todoItem.setTask(todo_editText.text.toString())
-                    todo_editText.text
-                } else {
-                    Toast.makeText(context, "Todo is empty. Creating generic Item.", Toast.LENGTH_SHORT).show()
-                    todoItem.setTask("Entry $counter")
-                    "Entry $counter"
-                }
-                counter++
-                todo_linearLayout.addView(todoItem)
+            val todoItem = TodoItemView(context!!)
 
-                todo_editText.setText("")
+            if (todo_editText.text.isNotEmpty()) {
+                todoItem.setTask(todo_editText.text.toString())
             } else {
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Todo is empty. Creating generic Item.", Toast.LENGTH_SHORT).show()
+                todoItem.setTask("Entry $counter")
             }
+            counter++
+            todo_list.addView(todoItem)
+            todo_editText.setText("")
         }
     }
 }
