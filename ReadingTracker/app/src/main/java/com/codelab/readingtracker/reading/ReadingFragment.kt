@@ -5,45 +5,48 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.codelab.readingtracker.R
-
-import java.util.ArrayList
+import com.codelab.readingtracker.storage.EntryProvider
+import com.codelab.readingtracker.storage.SharedPreferencesEntryProvider
+import kotlinx.android.synthetic.main.fragment_reading.*
+import java.util.*
 
 class ReadingFragment : Fragment() {
 
-    private var entries: ArrayList<Entry>? = null
-    private var entryProvider: EntryProvider? = null
+    private var entries: ArrayList<Entry> = ArrayList()
+    private lateinit var entryProvider: EntryProvider
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_reading, container, false)
 
-        entryProvider = context?.let { SharedPreferencesEntryProvider(it) }
+        entryProvider = SharedPreferencesEntryProvider(requireContext())
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        button.setOnClickListener {
+            entries.add(Entry(getTitle(), getPageNumber()))
+        }
 
         load()
 
-        if (entries == null) {
-            entries = ArrayList()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun getTitle() : String {
+        return title_editText.text.toString()
+    }
+
+    private fun getPageNumber() : Int {
+        val pageNumberString = pagenumber_editText.text.toString()
+
+        if (pageNumberString.isNotEmpty()) {
+            return Integer.parseInt(pageNumberString)
         }
-
-        val titleEditText = view.findViewById<EditText>(R.id.title_editText)
-        val pageNumberEditText = view.findViewById<EditText>(R.id.pagenumber_editText)
-
-        val button = view.findViewById<Button>(R.id.button)
-        button.setOnClickListener {
-            val title = titleEditText.text.toString()
-            val pageNumberString = pageNumberEditText.text.toString()
-            var pageNumber = 0
-            if (pageNumberString.isNotEmpty()) {
-                pageNumber = Integer.parseInt(pageNumberString)
-            }
-            val entry = Entry(title, pageNumber)
-            entries!!.add(entry)
-        }
-
-        return view
+        return 0
     }
 
     override fun onResume() {
@@ -62,13 +65,13 @@ class ReadingFragment : Fragment() {
     }
 
     private fun save() {
-        entries?.let { entryProvider!!.save(it) }
-        Log.d("ReadingFragment Save - ", "Saved " + entries!!.toTypedArray().contentToString())
+        entryProvider.save(entries)
+        Log.d("ReadingFragment Save - ", "Saved " + entries.toTypedArray().contentToString())
     }
 
     private fun load() {
-        entries = entryProvider!!.load() as ArrayList<Entry>
-        Log.d("ReadingFragment Load - ", "Loaded " + entries!!.toTypedArray().contentToString())
+        entries = entryProvider.load()
+        Log.d("ReadingFragment Load - ", "Loaded " + entries.toTypedArray().contentToString())
     }
 }
 

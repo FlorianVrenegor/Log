@@ -1,9 +1,10 @@
-package com.codelab.readingtracker.room
+package com.codelab.readingtracker.storage
 
 import android.content.Context
 import androidx.room.Room
 import com.codelab.readingtracker.reading.Entry
-import com.codelab.readingtracker.reading.EntryProvider
+import com.codelab.readingtracker.storage.room.EntryDatabase
+import com.codelab.readingtracker.storage.room.EntryEntity
 
 class RoomEntryProvider(context: Context) : EntryProvider {
 
@@ -20,10 +21,15 @@ class RoomEntryProvider(context: Context) : EntryProvider {
         entryDao.insertAll(*entities.toTypedArray())
     }
 
-    override fun load(): List<Entry> {
-        val entities: List<EntryEntity>? = entryDao.getAll().value ?: return listOf()
-        return entities!!.map { entryEntity ->
-            Entry(entryEntity.title, entryEntity.page ?: 0)
+    override fun load(): ArrayList<Entry> {
+        val entities: List<EntryEntity> = entryDao.getAll().value ?: return ArrayList()
+
+        val entries: ArrayList<Entry> = ArrayList()
+
+        for(entity in entities) {
+            entries.add(Entry(entity.title, entity.page ?: 0))
         }
+
+        return entries
     }
 }

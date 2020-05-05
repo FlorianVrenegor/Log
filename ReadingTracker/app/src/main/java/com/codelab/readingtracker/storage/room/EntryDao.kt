@@ -1,4 +1,4 @@
-package com.codelab.readingtracker.room
+package com.codelab.readingtracker.storage.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

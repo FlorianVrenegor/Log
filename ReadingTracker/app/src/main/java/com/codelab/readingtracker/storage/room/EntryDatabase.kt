@@ -1,4 +1,4 @@
-package com.codelab.readingtracker.room
+package com.codelab.readingtracker.storage.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
